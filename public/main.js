@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	//create 'Manager' object which
+	//automaticaly connects to server
+	var socket = io();
+
 	//use jQuery to select the <input> tag
 	var input = $('input');
 	//use jQuery to select the <div> tag with id=messages
@@ -16,7 +20,10 @@ $(document).ready(function() {
 		}
 
 		var message = input.val();
-		addMessage(message); //add <div>message</div> to #message div
+		addMessage(message); //add <div>message</div> to #message div\
+		socket.emit('message', message);
 		input.val(''); //clear input field
 	});
+
+	socket.on('message', addMessage);
 })
